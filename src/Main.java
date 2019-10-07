@@ -2,71 +2,86 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 	
-	public static Runnable setPlayer(String msg, Socket socket) {
+	public static List<Player> players;
+	public static Boolean INICIAR = false;
+	public static Integer QUANTIDADEPLAYER = 1;
+	final public static Integer tempo = 1000;
+	
+	
+	
+	public static void setPlayer( Socket socket) throws IOException {
 		
-		Runnable runnable = null;
+		Integer aliveThreads = 0;
 		
-		if(msg.equals("runner;ok")) {
+	
+		
+		ThreadJogador playerThread = null;
+		Thread thread;
+		Scanner scanner = new Scanner(socket.getInputStream());
+		
+		String msg = scanner.nextLine();
+		
+		
+	System.out.println(aliveThreads);
+	if(players.size() == Main.QUANTIDADEPLAYER-1) {
+		Main.INICIAR = true;
+	}
+	
+		if(msg.equals("runner")) {
 			System.out.println("Novo pegado");
-			runnable = new Pegador(socket);
-		}else if(msg.equals("catch;ok")){
+			playerThread = new ThreadJogador(socket, "runner", "runner"+players.size()+1);
+			thread = new Thread(playerThread);
+			players.add(playerThread);
+			thread.run();
+			
+			
+		}else if(msg.equals("catch")){
 			System.out.println("Novo pegador");
-			runnable = new Pegado(socket);
+			playerThread = new ThreadJogador(socket, "catch",  "catch"+players.size()+1);
+			thread = new Thread(playerThread);
+			players.add(playerThread);
+			thread.run();
+		
 		}
 		
-		return runnable;
+	
+
+		
+	
 		
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		try {
-			ServerSocket a = new ServerSocket(4261);
-			
-			Runnable runnable1 = null;
-			Runnable runnable2 = null;
-			
-			System.out.println("Aguarde");
-			
-			Scanner scanner;
-			String msg;
-			Socket conexao1 = a.accept();
-			
-			scanner = new Scanner(conexao1.getInputStream());
-			
-			msg = scanner.nextLine();
-			
-			runnable1 = setPlayer(msg ,conexao1);
-			
-			Thread thread1 = new Thread(runnable1);
-			thread1.run();
-			
-			
-			
-			Socket conexao2 = a.accept();
-			
-			scanner = new Scanner(conexao2.getInputStream());
-			
-			msg = scanner.nextLine();
-			
-			runnable2 = setPlayer(msg ,conexao2);
-
-			Thread thread2 = new Thread(runnable2);
-			thread2.run();
+	
+			try (ServerSocket listener = new ServerSocket(4261)) {
+				players = new ArrayList<>();
+	            System.out.println("Servidor rodando");
+	            Socket socket;
+	            while (!INICIAR) {
+	            	socket = listener.accept();
+	            	setPlayer(socket);
+	            }
+	            System.out.println("Iniciando jogo");
+	            
+	            Jogar.verificar(players);
+	        }catch (Exception e) {
+				// TODO: handle exception
+	        	System.out.println(e.getMessage());
+			}
 			
 		
 			
 			
 			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 	}
 
