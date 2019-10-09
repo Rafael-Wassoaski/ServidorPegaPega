@@ -12,6 +12,9 @@ public class Main {
 	public static Boolean INICIAR = false;
 	public static Integer QUANTIDADEPLAYER = 1;
 	final public static Integer tempo = 1000;
+	final public static String msgVencetempo = "O jogo acabou por tempo. Os corredores venceram";
+	final public static String msgVencePegar = "O jogo acabou pois todos os corredores foram pegos. Os perseguidores venceram";
+	final public static String msgPego = "Você foi pego por %s. O Jogo acabou para você, mas seu parceiro ainda pode vencer";
 	
 	
 	
@@ -28,14 +31,13 @@ public class Main {
 		String msg = scanner.nextLine();
 		
 		
-	System.out.println(aliveThreads);
 	if(players.size() == Main.QUANTIDADEPLAYER-1) {
 		Main.INICIAR = true;
 	}
 	
 		if(msg.equals("runner")) {
-			System.out.println("Novo pegado");
-			playerThread = new ThreadJogador(socket, "runner", "runner"+players.size()+1);
+			System.out.println("Novo corredor");
+			playerThread = new ThreadJogador(socket, "runner", "runner "+players.size()+1);
 			thread = new Thread(playerThread);
 			players.add(playerThread);
 			thread.run();
@@ -43,7 +45,7 @@ public class Main {
 			
 		}else if(msg.equals("catch")){
 			System.out.println("Novo pegador");
-			playerThread = new ThreadJogador(socket, "catch",  "catch"+players.size()+1);
+			playerThread = new ThreadJogador(socket, "catch",  "catch "+players.size()+1);
 			thread = new Thread(playerThread);
 			players.add(playerThread);
 			thread.run();

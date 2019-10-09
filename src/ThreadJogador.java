@@ -109,6 +109,7 @@ public class ThreadJogador implements Runnable, Player{
 	@Override
 	public String getTime() {
 		// TODO Auto-generated method stub
+		System.out.println("Tempo "+ this.getNome()+" : " + time);
 		return time;
 	}
 
@@ -118,6 +119,7 @@ public class ThreadJogador implements Runnable, Player{
 	@Override
 	public Integer getY() {
 		// TODO Auto-generated method stub
+		System.out.println("Y "+ this.getNome()+" : " + y);
 		return y;
 	}
 
@@ -127,7 +129,20 @@ public class ThreadJogador implements Runnable, Player{
 	@Override
 	public Integer getX() {
 		// TODO Auto-generated method stub
+		System.out.println("X "+ this.getNome()+" : " + x);
 		return x;
+	}
+	@Override
+	public void closeSocket() {
+		// TODO Auto-generated method stub
+		
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 }
