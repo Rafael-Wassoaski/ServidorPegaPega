@@ -9,12 +9,13 @@ import java.util.Scanner;
 public class Main {
 	
 	public static List<Player> players;
-	public static Boolean INICIAR = false;
+	public static Boolean iniciar = false;
 	public static Integer QUANTIDADEPLAYER = 1;
-	final public static Integer tempo = 1000;
-	final public static String msgVencetempo = "O jogo acabou por tempo. Os corredores venceram";
-	final public static String msgVencePegar = "O jogo acabou pois todos os corredores foram pegos. Os perseguidores venceram";
-	final public static String msgPego = "Vocï¿½ foi pego por %s. O Jogo acabou para vocï¿½, mas seu parceiro ainda pode vencer";
+	final public static Integer TEMPO = 1000;
+	final public static String MSGVENCETEMPO  = "O jogo acabou por tempo. Os corredores venceram";
+	final public static String MSGVENCEPEGAR  = "O jogo acabou pois todos os corredores foram pegos. Os perseguidores venceram";
+	final public static String MSGPEGO  = "Voce foi pego. O Jogo acabou para voce, mas seu parceiro ainda pode vencer";
+	final public static String MSGALERTAPROXIMO = "Um jogador está a uma posicao de voce";
 	
 	
 	
@@ -30,7 +31,7 @@ public class Main {
 		
 		
 	if(players.size() == Main.QUANTIDADEPLAYER-1) {
-		Main.INICIAR = true;
+		Main.iniciar = true;
 	}
 	
 		if(msg.equals("runner")) {
@@ -38,7 +39,7 @@ public class Main {
 			playerThread = new ThreadJogador(socket, "runner", "runner "+players.size()+1);
 			thread = new Thread(playerThread);
 			players.add(playerThread);
-			thread.run();
+			thread.start();
 			
 			
 		}else if(msg.equals("catch")){
@@ -46,7 +47,7 @@ public class Main {
 			playerThread = new ThreadJogador(socket, "catch",  "catch "+players.size()+1);
 			thread = new Thread(playerThread);
 			players.add(playerThread);
-			thread.run();
+			thread.start();
 		
 		}
 	}
@@ -59,10 +60,10 @@ public class Main {
 				players = new ArrayList<>();
 	            System.out.println("Servidor rodando");
 	            Socket socket;
-	            while (!INICIAR) {
+	            while (!iniciar) {
 	            	socket = listener.accept();
 	            	setPlayer(socket);
-	            	System.out.println("a");
+	            	
 	            }
 	            System.out.println("Iniciando jogo");
 	            

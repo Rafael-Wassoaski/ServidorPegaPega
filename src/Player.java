@@ -11,4 +11,5 @@ public interface Player{
 	public void EnviarMsg(String msg);
 	public void closeSocket();
 	public String getNome();
+
 }

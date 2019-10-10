@@ -1,6 +1,9 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class ThreadJogador implements Runnable, Player{
@@ -34,9 +37,6 @@ public class ThreadJogador implements Runnable, Player{
 			e.printStackTrace();
 		}
 	}
-	
-	
-
 
 	public String getTipo() {
 		return tipo;
@@ -47,21 +47,20 @@ public class ThreadJogador implements Runnable, Player{
 		Scanner scanner;
 		try {
 			scanner = new Scanner (socket.getInputStream());
-			String [] msg = scanner.nextLine().split(";");
+			String [] msg = {"0","0","0"};
+			if(scanner.hasNextLine()) {
 			
+				msg = scanner.nextLine().split(";");
+			}
 			time = msg[0];
 			x = Integer.parseInt(msg [1]);
 			y = Integer.parseInt(msg[2]);
 			
-			System.out.println(time +";"+x+";"+y);
+			System.out.println(getNome()+": "+time +";"+x+";"+y);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		
-		
-		
-		
 		
 	}
 
@@ -75,8 +74,9 @@ public class ThreadJogador implements Runnable, Player{
 		
 		EnviarMsg("Seu nome;"+getNome());
 		
-		while(!Main.INICIAR) {
+		while(!Main.iniciar) {
 			EnviarMsg("Aguardo;"+getTipo());
+			System.out.println("Aguardando inicio;"+getNome());
 			
 				try {
 					Thread.currentThread().sleep(5000);
@@ -89,11 +89,13 @@ public class ThreadJogador implements Runnable, Player{
 		
 		
 		EnviarMsg("Iniciar;"+getTipo());
-		while(Main.INICIAR) {
+		while(Main.iniciar) {
 		
 			try {
+				Thread.currentThread().sleep(Main.TEMPO);
 				leituraMsg();
-				Thread.currentThread().sleep(Main.tempo);
+			
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -138,6 +140,7 @@ public class ThreadJogador implements Runnable, Player{
 		
 		try {
 			socket.close();
+			Thread.currentThread().stop();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
