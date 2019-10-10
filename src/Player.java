@@ -1,7 +1,7 @@
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public interface Player {
+public interface Player{
 		
 	public String getTipo();
 	public void leituraMsg();

@@ -19,8 +19,8 @@ public class Jogar {
 			}					
 		}
 		
-		
 		while(Main.INICIAR) {
+			System.out.println("Tempo: "+tempo);
 			if(tempo == 60) {
 				//acabar por tempo (1 minuto)
 				Main.INICIAR = false;
@@ -34,7 +34,7 @@ public class Jogar {
 			}
 			
 			if(corredores.isEmpty()) {
-				//envia a resposta de vitoria aos perseguidores caso não haja mais corredores
+				//envia a resposta de vitoria aos perseguidores caso nï¿½o haja mais corredores
 				for(Player thread : players) {
 					thread.EnviarMsg(Main.msgVencePegar);
 					thread.closeSocket();
@@ -48,19 +48,15 @@ public class Jogar {
 				
 				ThreadJogador player;
 				
-				
-			
-			
-				
 				for(Player corredor : corredores) {
 					for(Player pegador : pegadores) {
 						if(corredor.getX() == pegador.getX() && pegador.getY() == corredor.getX() && corredor.getTime() == pegador.getTime()) {
 							//verificacao da position X, Y e tempo. Caso todos batam o corredor foi pego
 								
-							players.remove(corredor); 
+							corredores.remove(corredor); 
 							corredor.EnviarMsg(String.format(Main.msgPego, pegador.getNome()));
 							
-						}else if((corredor.getX()-1 == pegador.getX() ) ){
+						}else if((corredor.getX()-1 == pegador.getX() && corredor.getTime() == pegador.getTime()) || (corredor.getX()-1 == pegador.getX() && corredor.getTime() == pegador.getTime())){
 							
 						}
 					}
@@ -73,6 +69,12 @@ public class Jogar {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			tempo = tempo + 1;
+		}
+		
+		for(Player player : players) {
+			
 		}
 		
 	}

@@ -14,15 +14,13 @@ public class Main {
 	final public static Integer tempo = 1000;
 	final public static String msgVencetempo = "O jogo acabou por tempo. Os corredores venceram";
 	final public static String msgVencePegar = "O jogo acabou pois todos os corredores foram pegos. Os perseguidores venceram";
-	final public static String msgPego = "Você foi pego por %s. O Jogo acabou para você, mas seu parceiro ainda pode vencer";
+	final public static String msgPego = "Vocï¿½ foi pego por %s. O Jogo acabou para vocï¿½, mas seu parceiro ainda pode vencer";
 	
 	
 	
 	public static void setPlayer( Socket socket) throws IOException {
 		
 		Integer aliveThreads = 0;
-		
-	
 		
 		ThreadJogador playerThread = null;
 		Thread thread;
@@ -51,12 +49,6 @@ public class Main {
 			thread.run();
 		
 		}
-		
-	
-
-		
-	
-		
 	}
 
 	public static void main(String[] args) {
@@ -70,6 +62,7 @@ public class Main {
 	            while (!INICIAR) {
 	            	socket = listener.accept();
 	            	setPlayer(socket);
+	            	System.out.println("a");
 	            }
 	            System.out.println("Iniciando jogo");
 	            
