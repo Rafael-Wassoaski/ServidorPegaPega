@@ -66,22 +66,13 @@ public class ThreadJogador implements Runnable, Player{
 	}
 
 	public void EnviarMsg(String msg) {
-		System.out.println(getNome()+";"+msg);
+		//System.out.println(getNome()+";"+msg);
 		printWriter.println(msg);
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-//		try {
-//			Main.gate.await();
-//		} catch (InterruptedException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		} catch (BrokenBarrierException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 		
 		EnviarMsg("Seu nome;"+getNome());
 		

@@ -7,13 +7,18 @@ import java.util.List;
 public class Jogar {
 
 	private static Integer tempo = 0;
-	public void verificaTempo(List<Player> players) {
+	public static void verificaTempo(List<Player> players) {
 		
 		Integer attTime = tempo;
-		
+	
 		for(Player player : players) {
-			if(attTime < player.getTime()) {
-				attTime = player.getTime()+1;
+			if(player.getTime() != null) {
+			
+				if(attTime < player.getTime()) {
+					System.out.println("Um tempo incorretdo: " + player.getNome());
+					
+					attTime = player.getTime()+1;
+				}
 			}
 		}
 		
@@ -71,9 +76,19 @@ public class Jogar {
 				}
 			}
 			try {
-				Thread.currentThread().sleep(Main.TEMPO);				
+				verificaTempo(players);
+				Thread.currentThread().sleep(Main.TEMPO);	
 				for(Player corredor : corredores) {
 					for(Player pegador : pegadores) {
+						
+						if(corredor.getTime() == 0) {
+							corredores.remove(corredor);
+						}
+						
+						if(pegador.getTime() == 0) {
+							pegadores.remove(pegador);
+						}
+						
 						if(corredor.getX() == pegador.getX() && pegador.getY() == corredor.getX() && corredor.getTime() == pegador.getTime()) {
 							//verificacao da position X, Y e tempo. Caso todos batam o corredor foi pego
 								
