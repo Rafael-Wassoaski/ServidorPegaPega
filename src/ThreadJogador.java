@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+import java.util.concurrent.BrokenBarrierException;
 
 public class ThreadJogador implements Runnable, Player{
 	
@@ -14,7 +15,7 @@ public class ThreadJogador implements Runnable, Player{
 	private PrintWriter printWriter;
 	private Integer x;
 	private Integer y;
-	private String time;
+	private Integer time;
 	
 	public Socket getSocket() {
 		return socket;
@@ -52,12 +53,12 @@ public class ThreadJogador implements Runnable, Player{
 			
 				msg = scanner.nextLine().split(";");
 			}
-			time = msg[0];
+			time = Integer.parseInt(msg[0]);
 			x = Integer.parseInt(msg [1]);
 			y = Integer.parseInt(msg[2]);
 			
 			System.out.println(getNome()+": "+time +";"+x+";"+y);
-		} catch (IOException e) {
+	 	} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
@@ -65,12 +66,22 @@ public class ThreadJogador implements Runnable, Player{
 	}
 
 	public void EnviarMsg(String msg) {
+		System.out.println(getNome()+";"+msg);
 		printWriter.println(msg);
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+//		try {
+//			Main.gate.await();
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (BrokenBarrierException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		
 		EnviarMsg("Seu nome;"+getNome());
 		
@@ -109,7 +120,7 @@ public class ThreadJogador implements Runnable, Player{
 
 
 	@Override
-	public String getTime() {
+	public Integer getTime() {
 		// TODO Auto-generated method stub
 		System.out.println("Tempo "+ this.getNome()+" : " + time);
 		return time;

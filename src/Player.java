@@ -5,7 +5,7 @@ public interface Player{
 		
 	public String getTipo();
 	public void leituraMsg();
-	public String getTime();
+	public Integer getTime();
 	public Integer getY();
 	public Integer getX();
 	public void EnviarMsg(String msg);

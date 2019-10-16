@@ -5,17 +5,21 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.CyclicBarrier;
 
 public class Main {
+	
+	
 	
 	public static List<Player> players;
 	public static Boolean iniciar = false;
 	public static Integer QUANTIDADEPLAYER = 1;
+	public static final CyclicBarrier gate = new CyclicBarrier(QUANTIDADEPLAYER+1);
 	final public static Integer TEMPO = 1000;
 	final public static String MSGVENCETEMPO  = "O jogo acabou por tempo. Os corredores venceram";
 	final public static String MSGVENCEPEGAR  = "O jogo acabou pois todos os corredores foram pegos. Os perseguidores venceram";
 	final public static String MSGPEGO  = "Voce foi pego. O Jogo acabou para voce, mas seu parceiro ainda pode vencer";
-	final public static String MSGALERTAPROXIMO = "Um jogador está a uma posicao de voce";
+	final public static String MSGALERTAPROXIMO = "Um jogador estï¿½ a uma posicao de voce";
 	
 	
 	

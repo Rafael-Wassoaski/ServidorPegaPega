@@ -5,7 +5,24 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Jogar {
-	
+
+	private static Integer tempo = 0;
+	public void verificaTempo(List<Player> players) {
+		
+		Integer attTime = tempo;
+		
+		for(Player player : players) {
+			if(attTime < player.getTime()) {
+				attTime = player.getTime()+1;
+			}
+		}
+		
+		for(Player player : players) {
+			player.EnviarMsg("tempo;"+attTime);
+		
+		}
+		
+	}
 	public static String getData() {
 		Calendar calendar = new GregorianCalendar();
 		Date trialTime = new Date();
@@ -17,7 +34,6 @@ public class Jogar {
 		
 	public static void verificar(List<Player> players) {
 		
-		Integer tempo = 0;
 		List<Player>pegadores = new ArrayList<Player>();
 		List<Player>corredores = new ArrayList<Player>();
 		for(Player thread : players) {
@@ -32,7 +48,8 @@ public class Jogar {
 		
 		while(Main.iniciar) {
 			System.out.println("Tempo: "+tempo);
-			System.out.println(getData());
+			//System.out.println(getData());
+			//verificar(players);
 			if(tempo == 60) {
 				//acabar por tempo (1 minuto)
 				Main.iniciar = false;
