@@ -6,28 +6,7 @@ import java.util.List;
 
 public class Jogar {
 
-	private static Integer tempo = 0;
-	public static void verificaTempo(List<Player> players) {
-		
-		Integer attTime = tempo;
-	
-		for(Player player : players) {
-			if(player.getTime() != null) {
-			
-				if(attTime < player.getTime()) {
-					System.out.println("Um tempo incorretdo: " + player.getNome());
-					
-					attTime = player.getTime()+1;
-				}
-			}
-		}
-		
-		for(Player player : players) {
-			player.EnviarMsg("tempo;"+attTime);
-		
-		}
-		
-	}
+	public static Integer tempo = 0;
 	public static String getData() {
 		Calendar calendar = new GregorianCalendar();
 		Date trialTime = new Date();
@@ -41,84 +20,104 @@ public class Jogar {
 		
 		List<Player>pegadores = new ArrayList<Player>();
 		List<Player>corredores = new ArrayList<Player>();
-		for(Player thread : players) {
-			//for each que separa os tipos de jogadores
-			
-			if(thread.getTipo().equals("runner")){
-				corredores.add(thread);
-			}else if(thread.getTipo().equals("catch")){
-				pegadores.add(thread);
-			}					
-		}
 		
-		while(Main.iniciar) {
-			System.out.println("Tempo: "+tempo);
-			//System.out.println(getData());
-			//verificar(players);
-			if(tempo == 60) {
-				//acabar por tempo (1 minuto)
-				Main.iniciar = false;
-				for(Player thread : players) {
-					thread.EnviarMsg(Main.MSGVENCETEMPO);
-					thread.closeSocket();
-				}
-				
-				continue;
-			}
+		ThreadVereficaTempo verifica;
+		Thread threadVerifica;
+		while(true) {
+				verifica = new ThreadVereficaTempo(players);
+				threadVerifica =  new Thread(verifica);
+			System.out.println("inicou");
+			//verificaTempo(players);
+			threadVerifica.start();
 			
-			if(corredores.isEmpty()) {
-				//envia a resposta de vitoria aos perseguidores caso n�o haja mais corredores
-				for(Player thread : players) {
-					Main.iniciar = false;
-					thread.EnviarMsg(Main.MSGVENCEPEGAR);
-					thread.closeSocket();
-					continue;
-				}
-			}
+			
 			try {
-				verificaTempo(players);
-				Thread.currentThread().sleep(Main.TEMPO);	
-				for(Player corredor : corredores) {
-					for(Player pegador : pegadores) {
-						
-						if(corredor.getTime() == 0) {
-							corredores.remove(corredor);
-						}
-						
-						if(pegador.getTime() == 0) {
-							pegadores.remove(pegador);
-						}
-						
-						if(corredor.getX() == pegador.getX() && pegador.getY() == corredor.getX() && corredor.getTime() == pegador.getTime()) {
-							//verificacao da position X, Y e tempo. Caso todos batam o corredor foi pego
-								
-							corredores.remove(corredor); 
-							corredor.EnviarMsg(Main.MSGPEGO);
-							
-						}else if((corredor.getX()-1 == pegador.getX() && corredor.getTime() == pegador.getTime()) || (corredor.getY()-1 == pegador.getY() && corredor.getTime() == pegador.getTime())){
-							corredor.EnviarMsg(Main.MSGALERTAPROXIMO);
-						}
+				Thread.currentThread().sleep(Main.TEMPO);
+				tempo++;
+				threadVerifica.stop();
+				if(tempo >= 60) {
+					System.out.println("Parou");
+					for(Player player : players) {
+						player.EnviarMsg("Encerrou;0");
+						player.closeSocket();
 					}
+					
 				}
-				
-				
-				
-				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			tempo = tempo + 1;
 		}
-		
-		for(Player player : players) {
-			
-		}
+//		for(Player thread : players) {
+//			//for each que separa os tipos de jogadores
+//			
+//			if(thread.getTipo().equals("runner")){
+//				corredores.add(thread);
+//			}else if(thread.getTipo().equals("catch")){
+//				pegadores.add(thread);
+//			}					
+//		}
+//		
+//		while(Main.iniciar) {
+//			System.out.println("Tempo: "+tempo);
+//			//System.out.println(getData());
+//			//verificar(players);
+//			if(tempo == 60) {
+//				//acabar por tempo (1 minuto)
+//				Main.iniciar = false;
+//				for(Player thread : players) {
+//					thread.EnviarMsg(Main.MSGVENCETEMPO);
+//					thread.closeSocket();
+//				}
+//				
+//				continue;
+//			}
+//			
+//			if(corredores.isEmpty()) {
+//				//envia a resposta de vitoria aos perseguidores caso n�o haja mais corredores
+//				for(Player thread : players) {
+//					Main.iniciar = false;
+//					thread.EnviarMsg(Main.MSGVENCEPEGAR);
+//					thread.closeSocket();
+//					continue;
+//				}
+//			}
+//			try {
+//				//verificaTempo(players);
+//				Thread.currentThread().sleep(Main.TEMPO);	
+//				for(Player corredor : corredores) {
+//					for(Player pegador : pegadores) {
+//						
+//						if(corredor.getTime() == 0) {
+//							corredores.remove(corredor);
+//						}
+//						
+//						if(pegador.getTime() == 0) {
+//							pegadores.remove(pegador);
+//						}
+//						
+//						if(corredor.getX() == pegador.getX() && pegador.getY() == corredor.getX() && corredor.getTime() == pegador.getTime()) {
+//							//verificacao da position X, Y e tempo. Caso todos batam o corredor foi pego
+//								
+//							corredores.remove(corredor); 
+//							corredor.EnviarMsg(Main.MSGPEGO);
+//							
+//						}else if((corredor.getX()-1 == pegador.getX() && corredor.getTime() == pegador.getTime()) || (corredor.getY()-1 == pegador.getY() && corredor.getTime() == pegador.getTime())){
+//							corredor.EnviarMsg(Main.MSGALERTAPROXIMO);
+//						}
+//					}
+//				}
+//				
+//				
+//				
+//				
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			tempo = tempo + 1;
+//		}
 		
 	}
-	
-	
-	
-
 }
