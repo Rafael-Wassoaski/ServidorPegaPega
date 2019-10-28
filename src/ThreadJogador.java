@@ -15,7 +15,7 @@ public class ThreadJogador implements Runnable, Player{
 	private PrintWriter printWriter;
 	private Integer x;
 	private Integer y;
-	private Integer time;
+	private float time;
 	
 	public Socket getSocket() {
 		return socket;
@@ -53,7 +53,7 @@ public class ThreadJogador implements Runnable, Player{
 			
 				msg = scanner.nextLine().split(";");
 			}
-			time = Integer.parseInt(msg[0]);
+			time = Float.parseFloat(msg[0]);
 			x = Integer.parseInt(msg [1]);
 			y = Integer.parseInt(msg[2]);
 			
@@ -111,7 +111,7 @@ public class ThreadJogador implements Runnable, Player{
 
 
 	@Override
-	public Integer getTime() {
+	public float getTime() {
 		// TODO Auto-generated method stub
 		System.out.println("Tempo "+ this.getNome()+" : " + time);
 		return time;

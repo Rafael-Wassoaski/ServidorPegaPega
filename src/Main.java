@@ -13,7 +13,7 @@ public class Main {
 	
 	public static List<Player> players;
 	public static Boolean iniciar = false;
-	public static Integer QUANTIDADEPLAYER = 2;
+	public static Integer QUANTIDADEPLAYER = 1;
 	public static final CyclicBarrier gate = new CyclicBarrier(QUANTIDADEPLAYER+1);
 	final public static Integer TEMPO = 1000;
 	final public static String MSGVENCETEMPO  = "O jogo acabou por tempo. Os corredores venceram";

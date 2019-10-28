@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Jogar {
 
-	public static Integer tempo = 0;
+	public static float tempo = 0;
 	public static String getData() {
 		Calendar calendar = new GregorianCalendar();
 		Date trialTime = new Date();

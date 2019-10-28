@@ -12,7 +12,7 @@ public class ThreadVereficaTempo implements Runnable {
 	@Override
 	public void run() {
 		try {
-		Integer attTime = Jogar.tempo;
+		float attTime = Jogar.tempo;
 		
 		for(Player player : players) {
 			if(player != null) {
