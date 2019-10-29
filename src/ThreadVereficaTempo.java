@@ -25,6 +25,8 @@ public class ThreadVereficaTempo implements Runnable {
 			}
 		}
 		
+		
+		
 		for(Player player : players) {
 			player.EnviarMsg("tempo;"+attTime);
 		
@@ -32,7 +34,6 @@ public class ThreadVereficaTempo implements Runnable {
 		} catch(NullPointerException e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
-		
 	}		
 	}
 

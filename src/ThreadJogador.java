@@ -113,7 +113,7 @@ public class ThreadJogador implements Runnable, Player{
 	@Override
 	public float getTime() {
 		// TODO Auto-generated method stub
-		System.out.println("Tempo "+ this.getNome()+" : " + time);
+		//System.out.println("Tempo "+ this.getNome()+" : " + time);
 		return time;
 	}
 
@@ -123,7 +123,7 @@ public class ThreadJogador implements Runnable, Player{
 	@Override
 	public Integer getY() {
 		// TODO Auto-generated method stub
-		System.out.println("Y "+ this.getNome()+" : " + y);
+		//System.out.println("Y "+ this.getNome()+" : " + y);
 		return y;
 	}
 
@@ -133,7 +133,7 @@ public class ThreadJogador implements Runnable, Player{
 	@Override
 	public Integer getX() {
 		// TODO Auto-generated method stub
-		System.out.println("X "+ this.getNome()+" : " + x);
+		//System.out.println("X "+ this.getNome()+" : " + x);
 		return x;
 	}
 	@Override
