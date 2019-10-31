@@ -62,7 +62,7 @@ public class Jogar {
 					//envia a resposta de vitoria aos perseguidores caso nï¿½o haja mais corredores
 					for(Player thread : players) {
 						Main.iniciar = false;
-						thread.EnviarMsg(Main.MSGVENCEPEGAR);
+						thread.EnviarMsg("Encerrou;"+Main.MSGVENCEPEGAR);
 						thread.closeSocket();
 						continue;
 					}
@@ -72,11 +72,13 @@ public class Jogar {
 						
 						if(corredor.getTime() == 0) {
 							players.remove(corredor);
+							corredor.EnviarMsg("Encerrou;Você foi desconectado");
 							break;
 						}
 						
 						if(pegador.getTime() == 0) {
 							players.remove(pegador);
+							pegador.EnviarMsg("Encerrou;Você foi desconectado");
 							break;
 						}
 						
@@ -84,11 +86,11 @@ public class Jogar {
 							//verificacao da position X, Y e tempo. Caso todos batam o corredor foi pego
 								
 							players.remove(corredor); 
-							corredor.EnviarMsg(Main.MSGPEGO);
+							corredor.EnviarMsg("Encerrou;"+Main.MSGPEGO);
 							break;
 							
 						}else if((corredor.getX()-1 == pegador.getX() && corredor.getTime() == pegador.getTime()) || (corredor.getY()-1 == pegador.getY() && corredor.getTime() == pegador.getTime())){
-							corredor.EnviarMsg(Main.MSGALERTAPROXIMO);
+							corredor.EnviarMsg("Proximo;"+Main.MSGALERTAPROXIMO);
 							break;
 						}
 					}
